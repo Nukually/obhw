@@ -13,7 +13,8 @@ def sql_fetch_json(cursor: pymysql.cursors.Cursor):
     key_number = len(keys)
 
     json_data = []
-    for row in cursor.fetchall():
+    rows = cursor.fetchall()
+    for row in rows:
         item = dict()
         for q in range(key_number):
             item[keys[q]] = row[q]
@@ -80,9 +81,16 @@ class MySQLTools():
 
     # 台风编号查询
     def ty_min(self):
+        # 需要重新conn
+        # 如果在此获取cursor，是无法得到更新后的数据的，可能获取的是cursor缓存的数据库的数据
+        # 要想办法获取最新cursor
+        # 一开始尝试这样解决，但并非最优解
+        # self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, charset=self.charset)
         sqlstr = f"select no, name " \
                  f"from basic_info; "
         self.cur.execute(sqlstr)
+        # 用下面这句话解决
+        self.conn.commit()
         return sql_fetch_json(self.cur)
 
     # 绘制轨迹图
