@@ -57,12 +57,14 @@ class MySQLTools():
         return int(n1 / n * 100), int(n2 / n * 100), int(n3 / n * 100), int(n4 / n * 100), int(n5 / n * 100), int(
             n6 / n * 100)
 
+    # 数据添加sql语句
     def addTy(self, ty_no, name):
         sqlstr = f"insert into basic_info(no, name) values('{ty_no}','{name}');"
         self.cur.execute(sqlstr)
         self.conn.commit()
         return
 
+    # 数据查询sql语句
     def basicInfo(self):
         sqlstr = f"select * from basic_info "
         self.cur.execute(sqlstr)
@@ -85,7 +87,8 @@ class MySQLTools():
         # 如果在此获取cursor，是无法得到更新后的数据的，可能获取的是cursor缓存的数据库的数据
         # 要想办法获取最新cursor
         # 一开始尝试这样解决，但并非最优解
-        # self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, charset=self.charset)
+        # self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password
+        # , db=self.db, charset=self.charset)
         sqlstr = f"select no, name " \
                  f"from basic_info; "
         self.cur.execute(sqlstr)

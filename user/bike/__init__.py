@@ -6,21 +6,25 @@ user_query = Blueprint('user_query', __name__)
 util = MySQLTools('localhost', 'root', '123456', 'hw', 'utf8')
 
 
+# 查询基础数据
 @user_query.route('/basic', methods=['GET', 'POST'])
 def basic():
     return render_template("/user/query/basic_query.html")
 
 
+# 查询附加信息
 @user_query.route('/addition', methods=['GET', 'POST'])
 def addition():
     return render_template("/user/query/addition_query.html")
 
 
+# 查询轨迹信息
 @user_query.route('/move', methods=['GET', 'POST'])
 def move():
     return render_template("/user/query/move_query.html")
 
 
+# 被表格调用获取基础数据json
 @user_query.route('/getbd', methods=['POST', 'GET'])
 def get_basic_data():
     if request.method == 'GET':
@@ -31,6 +35,7 @@ def get_basic_data():
         return jsonify({'total': len(bd), 'rows': bd[int(offset): (int(offset) + int(limit))]})
 
 
+# 获取附加信息json
 @user_query.route('/get_ad', methods=['POST', 'GET'])
 def get_addition_data():
     if request.method == 'GET':
@@ -41,6 +46,7 @@ def get_addition_data():
         return jsonify({'total': len(ad), 'rows': ad[int(offset): (int(offset) + int(limit))]})
 
 
+# 轨迹信息查询结果
 @user_query.route('/movedata', methods=['POST', 'GET'])
 def rent_data():
     form = request.form
@@ -51,6 +57,7 @@ def rent_data():
     return render_template("/user/query/move_query.html")
 
 
+# 获取轨迹信息json
 @user_query.route('/getmd', methods=['POST', 'GET'])
 def get_move_data():
     if request.method == 'GET':

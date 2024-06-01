@@ -12,6 +12,7 @@ def index():
     return render_template("/user/index.html")
 
 
+# 主页json信息
 @user.route('/prequery', methods=['GET', 'POST'])
 def query_data():
     data = util.ty_min()

@@ -6,6 +6,7 @@ user_news = Blueprint('user_change', __name__)
 util = MySQLTools('localhost', 'root', '123456', 'hw', 'utf8')
 
 
+# 添加新的台风数据
 @user_news.route("/ty_create", methods=['GET', 'POST'])
 def news_create():
     if request.method == "POST":
